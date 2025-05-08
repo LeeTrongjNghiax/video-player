@@ -3518,17 +3518,25 @@
     * {
       background: #121212;
       color: white;
+      box-sizing: border-box;
 
       body {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 2rem;
         padding: 2rem;
+        font-size: 1.5rem;
 
-        h1 {
-          font-size: 4rem;
-          text-align: center;
+        input, button {
+          font-size: 1.5rem;
         }
 
-        h2 {
-          font-size: 2rem;
+        @media (width <= 1200px) {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          text-align: justify;
         }
 
         form {
@@ -3539,20 +3547,21 @@
 
           div {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: space-between;
             gap: 1rem;
 
             label, input {
-              font-size: 2rem;
+              width: 100%;
             }
 
             label {
-              word-wrap: normal; 
+              text-align: justify;
             }
 
             input[type="number"] {
-              width: 7rem;
+              width: 100%;
               padding: 1rem;
               border-radius: 1rem;
             }
@@ -3563,15 +3572,13 @@
               border-radius: 1rem;
               background: green;
               color: white;
-              font-size: 2rem;
             }
 
             button {
-              flex: 1;
+              width: 100%;
               padding: 1rem 2rem;
               border-radius: 1rem;
               color: white;
-              font-size: 2rem;
 
               &:first-child {
                 background: #770000ff;
@@ -3585,9 +3592,9 @@
         }
 
         video {
+          flex: 1;
           width: 100%;
           height: 100%;
-          padding-top: 1rem;
         }
       }
     }
@@ -3595,22 +3602,22 @@
   <title>Xem phim Đội đặc nhiệm CID</title>
 </head>
 <body>
-  <h1>Xem phim Đội đặc nhiệm CID</h1>
+  <div>
+    <h1>Đội đặc nhiệm CID</h1>
+    <p>Tập phim hiện tại: <strong id="current-episode">1</strong></p>
 
-  <form>
-    <div>
-      <label for="episode">Nhập số tập phim mà bạn muốn xem</label>
-      <input type="number" id="episode" value="1">
-      <input type="submit" value="Xem phim">
-    </div>
-
-    <div>
-      <button type="button" onclick="watch(-1)">Xem tập trước</button>
-      <button type="button" onclick="watch(+1)">Xem tập tiếp</button>
-    </div>
-
-    <h2>Tập phim hiện tại: <span id="current-episode">1</span></h2>
-  </form>
+    <form>
+      <div>
+        <label for="episode">Nhập số tập phim mà bạn muốn xem</label>
+        <input type="number" id="episode" value="1">
+        <input type="submit" value="Xem tập phim này">
+      </div>
+      <div>
+        <button type="button" onclick="watch(-1)">Xem tập trước</button>
+        <button type="button" onclick="watch(+1)">Xem tập tiếp</button>
+      </div>
+    </form>
+  </div>
 
   <video id="video" autoplay="autoplay" controls>
   </video>
@@ -3634,12 +3641,14 @@
         return;
 
       episodeInput.value = +episodeInput.value + delta;
-      currentEpisode.textContent = episodeInput.value;
+      currentEpisode.innerHTML = episodeInput.value;
 
       const foundVideo = datas.find(item => item.id === +episodeInput.value);
 
-      if ( foundVideo.src === "" ) 
+      if ( foundVideo.src === "" ) {
         foundVideo.src = datas[0].src;
+        currentEpisode.innerHTML = 1;
+      }
 
       if ( Hls.isSupported() ) {
         hls.loadSource(`${HOST_NAME}${foundVideo.src}${ENDPOINT}`);
