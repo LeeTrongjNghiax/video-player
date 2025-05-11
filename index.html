@@ -21,7 +21,7 @@
       }, 
       {
         id: 3, 
-        src: ''
+        src: `I_GVgksFByJ2I7P6XBeAmQ/1746790743/202106/re_doidacnhiemcid_e3_std/c2429478`
       }, 
       {
         id: 4, 
@@ -1441,11 +1441,11 @@
       }, 
       {
         id: 358, 
-        src: ''
+        src: 'https://vod.thvli.vn/XzqKnqTSlnkyJbL5XY6XdA/1746984363/202202/re_doidacnhiemcid_e358_std/c5b08ced/hls/playlist.m3u8'
       }, 
       {
         id: 359, 
-        src: ''
+        src: 'https://vod.thvli.vn/yux6zZOXwXOw-UDtJPhHAg/1746984495/202202/re_doidacnhiemcid_e359_std/712c66c1/hls/playlist.m3u8'
       }, 
       {
         id: 360, 
@@ -3651,7 +3651,8 @@
       }
 
       if ( Hls.isSupported() ) {
-        hls.loadSource(`${HOST_NAME}${foundVideo.src}${ENDPOINT}`);
+        // hls.loadSource(`${HOST_NAME}${foundVideo.src}${ENDPOINT}`);
+        hls.loadSource(`${foundVideo.src}`);
         hls.attachMedia(video);
       }
     }
